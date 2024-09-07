@@ -43,10 +43,10 @@ defmodule ExForce.Client.Tesla do
   def build_client(instance_url, opts) when is_binary(instance_url) do
     Tesla.client(
       [
+        {Tesla.Middleware.JSON, engine: Jason},
         {ExForce.Client.Tesla.Middleware,
          {instance_url, Keyword.get(opts, :api_version, @default_api_version)}},
         {Tesla.Middleware.Compression, format: "gzip"},
-        {Tesla.Middleware.JSON, engine: Jason},
         {Tesla.Middleware.Headers, get_headers(opts)}
       ],
       Keyword.get(opts, :adapter)
