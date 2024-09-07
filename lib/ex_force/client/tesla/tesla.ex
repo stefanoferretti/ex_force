@@ -67,10 +67,10 @@ defmodule ExForce.Client.Tesla do
   def build_oauth_client(instance_url, opts \\ []) do
     Tesla.client(
       [
+        {Tesla.Middleware.DecodeJson, engine: Jason},
         {Tesla.Middleware.BaseUrl, instance_url},
         {Tesla.Middleware.Compression, format: "gzip"},
         Tesla.Middleware.FormUrlencoded,
-        {Tesla.Middleware.DecodeJson, engine: Jason},
         {Tesla.Middleware.Headers, get_headers(opts)}
       ],
       Keyword.get(opts, :adapter)
